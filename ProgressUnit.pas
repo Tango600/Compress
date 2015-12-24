@@ -20,11 +20,11 @@ const
 
 Var
   P, S, L, R, Price: Real;
-  Step: Word;
+  Step: Integer;
 
 Procedure InitProgress(Size: Int64);
 Var
-  i: Byte;
+  i: Word;
 Begin
   If not NoProgress then
   Begin
@@ -42,7 +42,7 @@ End;
 
 Procedure SetProgress(Position: Int64);
 Var
-  pp, i: Byte;
+  pp, i: Word;
 Begin
   If not NoProgress then
     If (Position mod Step)=0 then
