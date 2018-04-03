@@ -12,6 +12,7 @@ uses
 Const
   SignatureSize=3;
   Signature: Array [1..4] of Byte=($50, $41, $47, $21);
+  fpcVersion={$I %FPCVERSION%};
 
 Var
   k: Byte;
@@ -22,7 +23,7 @@ Var
 
 Function UpTime: Cardinal;
 Begin
-  Result:={$IFDEF MSWINDOWS}GetTickCount
+  Result:={$IFDEF MSWINDOWS}GetTickCount64
 {$ELSE}
     ((StrToInt(FormatDateTime('H', Time))*3600+StrToInt(FormatDateTime('N', Time))*60+
     StrToInt(FormatDateTime('S', Time)))*1000)+StrToInt(FormatDateTime('Z', Time));
@@ -30,9 +31,6 @@ Begin
 End;
 
 Procedure WriteInfo(Time: Cardinal; ArcSize, FSize: Int64);
-Var
-  S: String;
-  sp: Real;
 Begin
   WriteLn;
   WriteLn;
@@ -45,20 +43,17 @@ Begin
   Else
     WriteLn('Time: '+IntToStr(Time div 3600000)+' h. '+IntToStr((Time mod 3600000)div 60000)+' m.');
 
-  sp:=(FSize/1024)/(Time/1000);
-  S:=FloatToStr(Int(sp))+'.';
-  WriteLn('Speed: '+Copy(S, 1, Pos('.', S)-1)+' Kbytes/s');
-  S:=FloatToStr(ArcSize/FSize)+'.';
-  WriteLn('Ratio: '+Copy(S, 1, 6));
+  WriteLn('Speed: '+IntToStr((FSize div 1024) div (Time div 1000))+' Kibytes/s');
+  WriteLn('Ratio: '+IntToStr(ArcSize div FSize));
   If ArcSize<100000 then
     WriteLn('Arc Size: '+IntToStr(ArcSize)+' bytes.')
   Else If (ArcSize>100000)and(ArcSize<1200000) then
-    WriteLn('Arc Size: '+IntToStr(ArcSize div 1024)+' Kb.')
+    WriteLn('Arc Size: '+IntToStr(ArcSize div 1024)+' Kib.')
   Else If (ArcSize>1200000)and(ArcSize<1073741824) then
-    WriteLn('Arc Size: '+IntToStr(ArcSize div(1024*1024))+' Mb.')
+    WriteLn('Arc Size: '+IntToStr(ArcSize div(1024*1024))+' Mib.')
   Else If ArcSize>1073741824 then
-    WriteLn('Arc Size: '+IntToStr(ArcSize div(1024*1024*1024))+' Gb. '+
-      IntToStr(ArcSize mod(1024*1024*1024)div(1024*1024))+' Mb.');
+    WriteLn('Arc Size: '+IntToStr(ArcSize div(1024*1024*1024))+' Gib. '+
+      IntToStr(ArcSize mod(1024*1024*1024)div(1024*1024))+' Mib.');
 End;
 
 
@@ -67,7 +62,10 @@ End;
 begin
   If (ParamStr(1)='/?')or(ParamStr(1)='') then
   Begin
-    WriteLn('Compress v.2.4');
+{$IFDEF FPC}
+    WriteLn('FPC v.'+fpcVersion);
+{$ENDIF}
+    WriteLn('Compress v.2.4.1');
     WriteLn(ParamStr(0)+' c|d InputFile.ext [OutputFile.ext]');
     WriteLn(' c compress');
     WriteLn(' d decompress');
@@ -153,9 +151,9 @@ begin
 {$ENDIF}
       End;
 
-      Time:=GetTickCount;
+      Time:=UpTime;
       CompressProc(DataFile, ArcFile);
-      Time:=GetTickCount-Time+1;
+      Time:=UpTime-Time+1;
 
       ArcFileSize:=GetFSize(ArcFile);
       DataFileSize:=GetFSize(DataFile);
@@ -290,5 +288,4 @@ begin
 {$ENDIF}
     End;
   End;
-
 end.

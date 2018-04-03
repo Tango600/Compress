@@ -1,2 +1,4 @@
-# Compress
-Replic the Unix compress with my fetures.
+Compress
+========
+
+Replica the Unix compress with my features.

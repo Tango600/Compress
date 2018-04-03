@@ -27,8 +27,6 @@ Const
   StepWordLength=ClearDictValue+2;
   EndOfStream=ClearDictValue+3;
 
-  Signature: Array [1..4] of Byte=($50, $41, $47, $21);
-
 Var
   MaxWordSize: Byte;
 
