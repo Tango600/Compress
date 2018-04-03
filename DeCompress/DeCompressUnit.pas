@@ -1,7 +1,7 @@
-Unit DeCompressUnit;
+п»їUnit DeCompressUnit;
 
-// Модуль LZW распаковщика
-// требует модуля FileBuffer
+// РњРѕРґСѓР»СЊ LZW СЂР°СЃРїР°РєРѕРІС‰РёРєР°
+// С‚СЂРµР±СѓРµС‚ РјРѕРґСѓР»СЏ FileBuffer
 interface
 
 uses SysUtils, Classes, Windows, FileBufferRead;
@@ -65,7 +65,7 @@ Begin
   Begin
     If Dict[s].Up=ClearDictValue then
     Begin
-      // Никого нет на этой ноде
+      // РќРёРєРѕРіРѕ РЅРµС‚ РЅР° СЌС‚РѕР№ РЅРѕРґРµ
       Dict[s].Up:=DictPos;
       Dict[DictPos].Up:=ClearDictValue;
       Dict[DictPos].Left:=ClearDictValue;
@@ -75,11 +75,11 @@ Begin
     End
     Else
     Begin
-      // Кто-то живёт тут
+      // РљС‚Рѕ-С‚Рѕ Р¶РёРІС‘С‚ С‚СѓС‚
       If C>Dict[Dict[s].Up].AddChar then
       Begin
-        // Смотрим куда податься
-        // Вперёд
+        // РЎРјРѕС‚СЂРёРј РєСѓРґР° РїРѕРґР°С‚СЊСЃСЏ
+        // Р’РїРµСЂС‘Рґ
         dc:=Dict[s].Up;
         While Dict[dc].Right<>ClearDictValue do
           dc:=Dict[dc].Right;
@@ -93,7 +93,7 @@ Begin
       End
       Else
       Begin
-        // Назад
+        // РќР°Р·Р°Рґ
         dc:=Dict[s].Up;
         While Dict[dc].Left<>ClearDictValue do
           dc:=Dict[dc].Left;
