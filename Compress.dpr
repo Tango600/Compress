@@ -11,6 +11,7 @@ uses
 
 Const
   Version='2.4.2';
+  ArcExt='.z';
   SignatureSize=3;
   Signature: Array [1..4] of Byte=($50, $41, $47, $21);
   fpcVersion={$I %FPCVERSION%};
@@ -74,12 +75,12 @@ begin
     WriteLn('FPC v.'+fpcVersion);
 {$ENDIF}
     WriteLn('Compress v.'+Version);
-    WriteLn(ParamStr(0)+' c|d InputFile.ext [OutputFile.ext]');
+    WriteLn(ExtractFileName(ParamStr(0))+' c|d InputFile.ext [OutputFile.ext]');
     WriteLn(' c compress');
     WriteLn(' d decompress');
     WriteLn;
     WriteLn(' switches:');
-    WriteLn(' -b VALUE max bits');
+    WriteLn(' -b VALUE max bits (16 default)');
     WriteLn(' -t test mode');
     WriteLn(' -o output file name');
     WriteLn(' -p without progress bar');
@@ -147,7 +148,7 @@ begin
           If i=1 then
             i:=Length(OutFileName)+1;
           OutFileName:=Copy(OutFileName, 1, i-1);
-          OutFileName:=OutFileName+'.z';
+          OutFileName:=OutFileName+ArcExt;
         End;
 
 {$IFDEF StreamType}
