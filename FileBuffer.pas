@@ -184,7 +184,7 @@ end;
 // ======================Bit read End======================================
 // ======================Bit Write=========================================
 
-Procedure BitWrite(Var F: TByteFile; Num: Word; NumBits: Byte);
+Procedure BitWrite(Var F: TByteFile; Num: Word; NumBits: Byte); inline;
 Var
   B: Byte;
   BitBuffer: Cardinal;
@@ -236,7 +236,7 @@ Begin
   Else
   Begin
     // не повезло не попали в буфер
-
+    B:=0;
 {$IFDEF StreamType}
     OldPos:=F.Position;
     F.Seek(SeekPos, 0);

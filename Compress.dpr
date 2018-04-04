@@ -10,6 +10,7 @@ uses
   SysUtils, FileBuffer, CompressUnit, ProgressUnit;
 
 Const
+  Version='2.4.2';
   SignatureSize=3;
   Signature: Array [1..4] of Byte=($50, $41, $47, $21);
   fpcVersion={$I %FPCVERSION%};
@@ -31,6 +32,8 @@ Begin
 End;
 
 Procedure WriteInfo(Time: Cardinal; ArcSize, FSize: Int64);
+var
+  sp: Cardinal;
 Begin
   WriteLn;
   WriteLn;
@@ -43,8 +46,13 @@ Begin
   Else
     WriteLn('Time: '+IntToStr(Time div 3600000)+' h. '+IntToStr((Time mod 3600000)div 60000)+' m.');
 
-  WriteLn('Speed: '+IntToStr((FSize div 1024) div (Time div 1000))+' Kibytes/s');
-  WriteLn('Ratio: '+IntToStr(ArcSize div FSize));
+  sp:=(FSize div 1024) div (Time div 1000);
+  If sp<2500 then
+    WriteLn('Speed: '+IntToStr(sp)+' Kibytes/s')
+  Else
+    WriteLn('Speed: '+IntToStr(sp div 1024)+' Mibytes/s');
+
+  WriteLn('Ratio: '+FloatToStr(Round((ArcSize/FSize)*1000)/1000));
   If ArcSize<100000 then
     WriteLn('Arc Size: '+IntToStr(ArcSize)+' bytes.')
   Else If (ArcSize>100000)and(ArcSize<1200000) then
@@ -65,7 +73,7 @@ begin
 {$IFDEF FPC}
     WriteLn('FPC v.'+fpcVersion);
 {$ENDIF}
-    WriteLn('Compress v.2.4.1');
+    WriteLn('Compress v.'+Version);
     WriteLn(ParamStr(0)+' c|d InputFile.ext [OutputFile.ext]');
     WriteLn(' c compress');
     WriteLn(' d decompress');

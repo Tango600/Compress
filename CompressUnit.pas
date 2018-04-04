@@ -5,9 +5,6 @@
 interface
 
 uses SysUtils,
-{$IFDEF MSWindows}
-  Windows,
-{$ENDIF}
 {$IFDEF UNIX}
   Linux,
 {$ENDIF}
@@ -125,7 +122,7 @@ Begin
   End;
 End;
 
-Function FindNode(s: Word; C: Byte): LongInt;
+Function FindNode(s: Word; C: Byte): LongInt; inline;
 Var
   dc: Word;
 Begin
@@ -263,7 +260,7 @@ Begin
     OutputBytes(F, Buff[i]);
 End;
 
-Procedure DecodeString(DeCode: Word);
+Procedure DecodeString(DeCode: Word); inline;
 Var
   dc: Word;
   ReversC, ForwC: Cardinal;
