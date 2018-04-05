@@ -184,7 +184,7 @@ end;
 // ======================Bit read End======================================
 // ======================Bit Write=========================================
 
-Procedure BitWrite(Var F: TByteFile; Num: Word; NumBits: Byte); inline;
+Procedure BitWrite(Var F: TByteFile; Num: Word; NumBits: Byte);
 Var
   B: Byte;
   BitBuffer: Cardinal;

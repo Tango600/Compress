@@ -7,15 +7,16 @@ uses
   Classes,
 {$ENDIF}
 {$IFDEF MSWINDOWS}Windows, {$ENDIF}
-  SysUtils, FileBuffer, CompressUnit, ProgressUnit;
+  SysUtils, FileBuffer, CompressUnit, Math, ProgressUnit;
 
 Const
-  Version='2.4.2';
+  Version='2.4.4';
   ArcExt='.z';
   SignatureSize=3;
   Signature: Array [1..4] of Byte=($50, $41, $47, $21);
+{$IFDEF FPC}
   fpcVersion={$I %FPCVERSION%};
-
+{$ENDIF}
 Var
   k: Byte;
   SignatureOnly, Raw:Boolean;
@@ -25,7 +26,7 @@ Var
 
 Function UpTime: Cardinal;
 Begin
-  Result:={$IFDEF MSWINDOWS}GetTickCount64
+  Result:={$IFDEF MSWINDOWS}{$IFDEF FPC}GetTickCount64{$ELSE}GetTickCount{$ENDIF}
 {$ELSE}
     ((StrToInt(FormatDateTime('H', Time))*3600+StrToInt(FormatDateTime('N', Time))*60+
     StrToInt(FormatDateTime('S', Time)))*1000)+StrToInt(FormatDateTime('Z', Time));
@@ -34,7 +35,7 @@ End;
 
 Procedure WriteInfo(Time: Cardinal; ArcSize, FSize: Int64);
 var
-  sp: Cardinal;
+  sp: Real;
 Begin
   WriteLn;
   WriteLn;
@@ -47,13 +48,13 @@ Begin
   Else
     WriteLn('Time: '+IntToStr(Time div 3600000)+' h. '+IntToStr((Time mod 3600000)div 60000)+' m.');
 
-  sp:=(FSize div 1024) div (Time div 1000);
+  sp:=(FSize/1024)/(Time/1000);
   If sp<2500 then
-    WriteLn('Speed: '+IntToStr(sp)+' Kibytes/s')
+    WriteLn('Speed: '+FloatToStr(SimpleRoundTo(sp, -2))+' Kibytes/s')
   Else
-    WriteLn('Speed: '+IntToStr(sp div 1024)+' Mibytes/s');
+    WriteLn('Speed: '+FloatToStr(SimpleRoundTo(sp/1024, -2))+' Mibytes/s');
 
-  WriteLn('Ratio: '+FloatToStr(Round((ArcSize/FSize)*1000)/1000));
+  WriteLn('Ratio: '+FloatToStr(SimpleRoundTo(((ArcSize/FSize)*1000)/1000, -3)));
   If ArcSize<100000 then
     WriteLn('Arc Size: '+IntToStr(ArcSize)+' bytes.')
   Else If (ArcSize>100000)and(ArcSize<1200000) then
@@ -67,6 +68,8 @@ End;
 
 
 // ====================Main program===========================
+
+{$R *.res}
 
 begin
   If (ParamStr(1)='/?')or(ParamStr(1)='') then
@@ -140,16 +143,7 @@ begin
         End;
 
         If OutFileName='' then
-        Begin
-          OutFileName:=ExtractFileName(InFileName);
-          i:=Length(OutFileName);
-          While (OutFileName[i]<>'.')and(i>1) do
-            Dec(i);
-          If i=1 then
-            i:=Length(OutFileName)+1;
-          OutFileName:=Copy(OutFileName, 1, i-1);
-          OutFileName:=OutFileName+ArcExt;
-        End;
+          OutFileName:=ChangeFileExt(ExtractFileName(InFileName), ArcExt);
 
 {$IFDEF StreamType}
         ArcFile:=TFileStream.Create(OutFileName, fmCreate);
@@ -186,8 +180,8 @@ begin
 
   If LowerCase(ParamStr(1))='d' then
   Begin
-    If Pos('.z', InFileName)=0 then
-      InFileName:=InFileName+'.z';
+    If Pos(ArcExt, InFileName)=0 then
+      InFileName:=InFileName+ArcExt;
     If FileExists(InFileName) then
     Begin
 {$IFDEF StreamType}
@@ -215,17 +209,15 @@ begin
         If not SignatureOnly then
         Begin
           OutFileName2:='';
-          Repeat
+          repeat
             k:=BitRead(ArcFile, 8);
             OutFileName2:=OutFileName2+Chr(k);
           Until k=$2A;
+          Delete(OutFileName2, Length(OutFileName2), 1);
         End;
 
         If OutFileName='' then
-        Begin
           OutFileName:=OutFileName2;
-          Delete(OutFileName, Length(OutFileName), 1);
-        End;
 
         If WriteMode=1 then
         Begin
@@ -259,8 +251,8 @@ begin
 
   If LowerCase(ParamStr(1))='l' then
   Begin
-    If Pos('.z', InFileName)=0 then
-      InFileName:=InFileName+'.z';
+    If Pos(ArcExt, InFileName)=0 then
+      InFileName:=InFileName+ArcExt;
     If FileExists(InFileName) then
     Begin
 {$IFDEF StreamType}

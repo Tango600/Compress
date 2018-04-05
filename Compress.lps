@@ -8,29 +8,40 @@
       <Unit0>
         <Filename Value="Compress.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="34"/>
-        <CursorPos Y="291"/>
-        <UsageCount Value="21"/>
+        <TopLine Value="54"/>
+        <CursorPos X="40" Y="48"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
         <Filename Value="FileBuffer.pas"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="21"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="46"/>
+        <CursorPos X="12" Y="45"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
         <Filename Value="CompressUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="21"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="9" Y="209"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
         <Filename Value="ProgressUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="21"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="48"/>
+        <CursorPos X="23" Y="59"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -41,14 +52,13 @@
       </Unit4>
       <Unit5>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\sysutilh.inc"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="20"/>
         <CursorPos X="10" Y="29"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit5>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="16" HistoryIndex="15">
       <Position1>
         <Filename Value="Compress.dpr"/>
         <Caret Line="71" Column="38" TopLine="67"/>
@@ -57,6 +67,62 @@
         <Filename Value="Compress.dpr"/>
         <Caret Line="26" Column="43" TopLine="16"/>
       </Position2>
+      <Position3>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="6" Column="26"/>
+      </Position3>
+      <Position4>
+        <Filename Value="CompressUnit.pas"/>
+        <Caret Line="233" Column="22" TopLine="229"/>
+      </Position4>
+      <Position5>
+        <Filename Value="FileBuffer.pas"/>
+        <Caret Line="154" Column="16" TopLine="148"/>
+      </Position5>
+      <Position6>
+        <Filename Value="FileBuffer.pas"/>
+        <Caret Line="201" Column="16" TopLine="192"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="150" Column="42" TopLine="142"/>
+      </Position7>
+      <Position8>
+        <Filename Value="CompressUnit.pas"/>
+        <Caret Line="247" Column="10" TopLine="235"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="74" Column="13" TopLine="58"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="53" Column="34" TopLine="44"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="29" Column="74" TopLine="20"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="53" Column="34" TopLine="44"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="57" Column="79" TopLine="47"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Compress.dpr"/>
+        <Caret Line="253" Column="36" TopLine="260"/>
+      </Position14>
+      <Position15>
+        <Filename Value="FileBuffer.pas"/>
+        <Caret Line="159" Column="24" TopLine="151"/>
+      </Position15>
+      <Position16>
+        <Filename Value="FileBuffer.pas"/>
+        <Caret Line="54" Column="22" TopLine="43"/>
+      </Position16>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>
